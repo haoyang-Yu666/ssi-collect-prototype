@@ -13,7 +13,8 @@
     .phone{width:390px;height:844px;background:var(--bg);border-radius:28px;overflow:hidden;position:relative;box-shadow:0 26px 80px rgba(0,0,0,.35)}
     .status{height:34px;padding:11px 18px 0;display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:#111827;background:var(--card)}
     .phone.loginMode .status{background:var(--navy);color:#fff}
-    .screen{display:none;height:810px;padding:0 16px 86px;overflow:auto;background:var(--bg)}
+    .screen{display:none;height:810px;padding:0 16px 86px;overflow:auto;background:var(--bg);scrollbar-width:none;-ms-overflow-style:none}
+    .screen::-webkit-scrollbar{display:none}
     .screen.active{display:block}
     .top{height:58px;margin:0 -16px 16px;padding:0 16px;display:flex;align-items:center;justify-content:center;background:var(--card);border-bottom:1px solid #eef2f8;position:sticky;top:0;z-index:3}
     .login .top{display:none}
@@ -42,7 +43,7 @@
     .clickLine{cursor:pointer}.switch{width:42px;height:24px;border-radius:999px;background:#d8deea;position:relative}.switch:before{content:"";width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:.18s}.switch.on{background:#23c56f}.switch.on:before{left:20px}
     .videoGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.video{height:96px;border-radius:8px 8px 0 0;background:#1e243e;display:grid;place-items:center;color:#8ea4cf}.video:before{content:"▶";width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.45);display:grid;place-items:center;color:#b4c2df}.caption{font-size:11px;margin:0 0 10px;padding:8px;background:#f8fafd;border:1px solid var(--line);border-top:0;border-radius:0 0 8px 8px}.progress{height:8px;background:#e7edf7;border-radius:999px;overflow:hidden}.bar{height:100%;width:49%;background:var(--blue)}
     .quickStats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quickStat{border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;align-items:center;gap:10px}.statIcon{width:36px;height:36px;border-radius:8px;background:#eef3ff;color:var(--blue);display:grid;place-items:center;font-weight:900}.noticeLine{font-size:12px;color:var(--muted);margin:12px 2px}
-    .modalMask{position:absolute;inset:0;background:rgba(5,14,32,.38);z-index:20;display:none;align-items:flex-end}.modalMask.show{display:flex}.sheet{background:#fff;border-radius:22px 22px 0 0;width:100%;padding:16px 16px 22px}.sheet.wifiSheet{margin:0 4px 490px;border-radius:14px;padding:18px 24px}.sheetTitle{text-align:center;font-weight:900;margin-bottom:12px}.sheetItem{height:54px;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;margin-bottom:9px;cursor:pointer}.sheetItem.disabled{opacity:.45;cursor:not-allowed}.toast{position:absolute;left:22px;right:22px;bottom:84px;background:#111c36;color:#fff;border-radius:12px;padding:12px;text-align:center;font-size:13px;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s;z-index:30}.toast.show{opacity:1;transform:translateY(0)}
+    .modalMask{position:absolute;inset:0;background:rgba(5,14,32,.38);z-index:20;display:none;align-items:center;justify-content:center;padding:0 18px}.modalMask.show{display:flex}.modalMask.dialogMode{align-items:center;justify-content:center;padding:0 18px}.sheet{background:#fff;border-radius:18px;width:100%;max-width:360px;padding:22px 22px;box-shadow:0 24px 80px rgba(0,0,0,.25)}.sheet.wifiSheet{border-radius:18px;padding:22px 22px}.sheet.dialogSheet{position:relative;border-radius:18px;margin:0;padding:24px 22px 22px;box-shadow:0 24px 80px rgba(0,0,0,.25)}.sheetTitle{text-align:center;font-weight:900;margin-bottom:12px;font-size:18px}.sheetItem{height:54px;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;margin-bottom:9px;cursor:pointer}.sheetItem.disabled{opacity:.45;cursor:not-allowed}.dialogIcon{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;margin:2px auto 16px;font-size:28px}.dialogIcon.red{background:#fff0f0;color:var(--red)}.dialogIcon.blue{background:#eef3ff;color:var(--blue)}.dialogIcon.green{background:#eaf9f0;color:var(--green)}.fileRow{display:flex;align-items:center;gap:12px;background:#fff;border-radius:12px;padding:12px;margin-bottom:10px;user-select:none;cursor:pointer}.fileRow .checkBox{display:none}.fileRow.selecting .checkBox{display:grid;flex:0 0 20px}.checkBox{width:20px;height:20px;border:2px solid #9aa4b6;border-radius:6px;display:grid;place-items:center;color:#fff;font-size:12px}.checkBox.on{border-color:var(--blue);background:var(--blue)}.fileIcon{width:40px;height:40px;border-radius:10px;background:#eef3ff;color:var(--blue);display:grid;place-items:center;font-weight:900}.fileBar{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:14px 18px 18px;display:flex;align-items:center;gap:12px;z-index:6}.previewThumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.previewCard{overflow:hidden;border:1px solid var(--line);border-radius:10px;background:#f8fafd}.previewCard .video{height:96px;border-radius:0}.previewLabel{padding:8px;font-size:12px;font-weight:800}.previewLabel .ok{display:block;margin-top:2px}.toast{position:absolute;left:22px;right:22px;bottom:84px;background:#111c36;color:#fff;border-radius:12px;padding:12px;text-align:center;font-size:13px;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s;z-index:30}.toast.show{opacity:1;transform:translateY(0)}
     @media(max-width:480px){.wrap{padding:0}.phone{width:100vw;height:100vh;border-radius:0}.screen{height:calc(100vh - 34px)}}
   </style>
 </head>
@@ -60,7 +61,7 @@
         <div class="top"><div class="title">设备</div></div>
         <div class="section">已保存设备</div>
         <div id="homeDevices"></div>
-        <button class="btn" id="homeAddBtn" data-go="add">+ 新增采集设备</button>
+        <button class="btn" id="homeAddBtn" data-go="add" style="margin-bottom:14px">+ 新增采集设备</button>
         <div class="card guide" id="pairGuide" data-go="pair"><div class="guideIcon">↗</div><div class="grow"><div class="h2">设备配对编组</div><div class="hint" id="pairHint">请先确保所需设备均处于连接状态</div></div><span class="pill orange" id="pairState">未就绪</span><span class="chev">›</span></div>
         <div class="section">当前采集设备组</div>
         <div id="homeGroup"></div>
@@ -95,15 +96,16 @@
         <div class="card"><div class="groupGrid" id="groupTiles"></div></div>
         <div class="section">采集前检查</div>
         <div class="card"><div class="line row"><span>网络状态</span><b class="ok">全部已连接</b></div><div class="line row"><span>SD 卡状态</span><b class="ok">空间充足</b></div><div class="line row"><span>数据同步</span><b class="ok">正常</b></div></div>
-        <button class="btn" data-go="preview">多路视频预浏览</button>
       </section>
 
       <section class="screen" data-screen="preview">
         <div class="top"><button class="back" data-go="group">‹</button><div class="title">多路视频预浏览</div></div>
         <div class="section row"><span>头环 A · 多路视频</span><span class="pill green">正常</span></div>
-        <div class="videoGrid"><div><div class="video"></div><div class="caption">通道 1 · 正常</div></div><div><div class="video"></div><div class="caption">通道 2 · 正常</div></div><div><div class="video"></div><div class="caption">通道 3 · 正常</div></div><div><div class="video"></div><div class="caption">通道 4 · 正常</div></div></div>
-        <div class="section row"><span>手环数据预览</span><span class="pill green">2 路</span></div>
-        <div class="card"><div class="groupGrid" id="previewRings"></div></div>
+        <div class="videoGrid"><div><div class="video"></div><div class="caption"><b>通道 1（前额）</b><br><span class="ok">● 正常</span></div></div><div><div class="video"></div><div class="caption"><b>通道 2（左颞）</b><br><span class="ok">● 正常</span></div></div><div><div class="video"></div><div class="caption"><b>通道 3（右颞）</b><br><span class="ok">● 正常</span></div></div><div><div class="video"></div><div class="caption"><b>通道 4（后枕左）</b><br><span class="ok">● 正常</span></div></div><div><div class="video"></div><div class="caption"><b>通道 5（后枕右）</b><br><span class="warn">● 加载中...</span></div></div></div>
+        <div class="section row"><span>左手环 B — 1路</span><span class="pill green">● 正常</span></div>
+        <div class="previewCard" style="width:50%"><div class="video"></div><div class="previewLabel">左手环 480p<span class="ok">● 正常</span></div></div>
+        <div class="section row"><span>右手环 C — 1路</span><span class="pill green">● 正常</span></div>
+        <div class="previewCard" style="width:50%"><div class="video"></div><div class="previewLabel">右手环 480p<span class="ok">● 正常</span></div></div>
         <div class="alert info">预浏览用于确认设备画面与传感器状态，正式采集前建议先完成检查。</div>
         <button class="btn" data-action="startCollect">开始正式采集</button>
       </section>
@@ -130,6 +132,13 @@
         <div class="alert">格式化会删除 SD 卡全部数据，请确认数据已上传。</div><button class="btn danger" data-action="formatSd">格式化 SD 卡</button>
       </section>
 
+      <section class="screen" data-screen="sd-files">
+        <div class="top"><button class="back" data-go="detail">‹</button><div class="title">SD卡文件</div></div>
+        <div class="section">文件列表</div>
+        <div id="sdFileList"></div>
+        <div id="sdFileBar"></div>
+      </section>
+
       <section class="screen" data-screen="me">
         <div class="top"><div class="title">我的</div></div>
         <div class="card row"><div class="deviceIcon">内</div><div class="grow"><div class="name">内部测试账号1</div><div class="id">采集工程组 · SSI-TSP-102</div></div></div>
@@ -140,7 +149,7 @@
       </section>
 
       <nav class="bottomNav" id="nav"><button class="active" data-nav="home"><span class="navIcon">▣</span>设备</button><button data-nav="me"><span class="navIcon">♙</span>我的</button></nav>
-      <div class="modalMask" id="modal"><div class="sheet"><div class="sheetTitle" id="sheetTitle">选择设备</div><div id="sheetBody"></div><button class="btn plain" data-action="closeModal">取消</button></div></div>
+      <div class="modalMask" id="modal"><div class="sheet"><div class="sheetTitle" id="sheetTitle">选择设备</div><div id="sheetBody"></div></div></div>
       <div class="toast" id="toast">操作完成</div>
     </div>
   </div>
@@ -157,17 +166,33 @@
       {id:'leftB',role:'ring',name:'左手环 B',sn:'SSI-BL-880B',battery:'94%',storage:'7.8 GB',firmware:'v1.1.5'},
       {id:'rightC',role:'ring',name:'右手环 C',sn:'SSI-BR-110C',battery:'-',storage:'-',firmware:'未连接',offline:true}
     ];
-    const state=JSON.parse(localStorage.getItem('ssi-proto-state')||'null')||{connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA'};
-    function save(){localStorage.setItem('ssi-proto-state',JSON.stringify(state))}
+    const files=[
+      {id:'f1',name:'REC_20260412_0940.ssi',size:'2.4 MB',duration:'15 分 20 秒'},
+      {id:'f2',name:'REC_20260411_1820.ssi',size:'4.1 MB',duration:'28 分 10 秒'},
+      {id:'f3',name:'REC_20260410_1530.ssi',size:'1.8 MB',duration:'12 分 45 秒'},
+      {id:'f4',name:'REC_20260409_1015.ssi',size:'3.2 MB',duration:'22 分 05 秒'},
+      {id:'f5',name:'REC_20260408_0845.ssi',size:'5.0 MB',duration:'35 分 12 秒'}
+    ];
+    const initialState={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA'};
+    const state={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA',fileSelect:false,selectedFiles:[]};
+    function resetDemo(){state.connected=[];state.slots={head:null,left:null,right:null};state.grouped=false;state.last='home';state.detail='headA';state.fileSelect=false;state.selectedFiles=[]}
+    function save(){}
     function say(t){toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1500)}
     function online(){return catalog.filter(d=>state.connected.includes(d.id))}
     function device(id){return catalog.find(d=>d.id===id)}
     function iconFor(d){return d.role==='head'?'头':'环'}
+    function setDetailTab(tabName){
+      app.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tabName));
+      document.getElementById('detailStatus').hidden=tabName!=='status';
+      document.getElementById('detailData').hidden=tabName!=='data';
+      document.getElementById('detailMaintain').hidden=tabName!=='maintain';
+    }
     function show(name){
       if(name==='pair') prefillSlots();
       screens.forEach(s=>s.classList.toggle('active',s.dataset.screen===name));
+      if(name==='detail'&&state.detailTab) setDetailTab(state.detailTab);
       app.classList.toggle('loginMode',name==='login');
-      nav.style.display=name==='login'?'none':'flex';
+      nav.style.display=(name==='login'||name==='sd-files')?'none':'flex';
       nav.querySelectorAll('button').forEach(b=>b.classList.toggle('active',(name!=='me'&&b.dataset.nav==='home')||(name==='me'&&b.dataset.nav==='me')));
       state.last=name; save(); render();
     }
@@ -178,7 +203,7 @@
       save();
     }
     function render(){
-      renderHome(); renderScan(); renderPair(); renderGroup(); renderDetail();
+      renderHome(); renderScan(); renderPair(); renderGroup(); renderDetail(); renderSdFiles();
     }
     function renderHome(){
       const homeDevices=document.getElementById('homeDevices');
@@ -228,21 +253,34 @@
       if(sections[1]) sections[1].textContent='多路预录制预览';
       if(cards[0]) cards[0].innerHTML=`<div class="row"><div class="h2">设备组状态摘要</div><span class="pill green">同步就绪</span></div><div class="groupGrid" style="margin-top:12px">${slotTile('left')}${slotTile('head')}${slotTile('right')}</div><div class="ok" style="text-align:center;margin-top:12px">可以正常录制</div>`;
       if(cards[1]) cards[1].innerHTML=`<div class="row"><div class="h2">采集前检查</div><b class="ok">全部通过</b></div><div class="line row"><span>成员完整性</span><b class="ok">通过</b></div><div class="line row"><span>左右槽位与 SN</span><b class="ok">一致</b></div><div class="line row"><span>连接心跳与时间同步</span><b class="ok">正常</b></div><div class="line row"><span>电量/存储/固件/标定</span><b class="ok">满足</b></div>`;
-      if(cards[2]) cards[2].innerHTML=`<div class="row clickLine" data-go="preview"><div class="h2">多路预录制预览</div><span class="chev">›</span></div><div class="videoGrid" style="grid-template-columns:repeat(3,1fr);margin-top:12px"><div><div class="video"></div><div class="caption">头环 5路<br><span class="ok">正常</span></div></div><div><div class="video"></div><div class="caption">左手环 480p<br><span class="ok">正常</span></div></div><div><div class="video"></div><div class="caption">右手环 480p<br><span class="ok">正常</span></div></div></div><button class="btn" data-action="startCollect">▶ 开始采集</button>`;
+      if(cards[2]) cards[2].innerHTML=`<div class="row clickLine" data-go="preview"><div class="h2">多路预录制预览</div><span class="chev">›</span></div><div class="previewThumbs"><div class="previewCard"><div class="video"></div><div class="previewLabel">头环 5路<span class="ok">正常</span></div></div><div class="previewCard"><div class="video"></div><div class="previewLabel">左手环 480p<span class="ok">正常</span></div></div><div class="previewCard"><div class="video"></div><div class="previewLabel">右手环 480p<span class="ok">正常</span></div></div></div><button class="btn" style="margin-top:14px" data-action="startCollect">▶ 开始采集</button>`;
     }
     function renderDetail(){
       const d=device(state.detail)||catalog[0];
       document.getElementById('detailTitle').textContent=`${d.name} 设备详情`;
-      document.getElementById('detailStatus').innerHTML=`<div class="heroDevice"><div><div style="font-size:34px">${d.role==='head'?'▱':'▯'}</div><div class="ok" style="margin:8px 0 4px">设备 IP</div><b>${d.name} (${d.sn})</b></div></div><div class="card"><div class="row"><div class="h2">基础信息</div><b class="ok">已连接</b></div><div class="line row"><span>设备类型</span><b>${d.role==='head'?'头环':'手环'}</b></div><div class="line row"><span>CPU序列号</span><b>${d.role==='head'?'4a36ed738':'4a3vf0098'}</b></div><div class="line row"><span>固件版本</span><b>1.0.0</b></div><div class="line row"><span>工作状态</span><b>未录制</b></div></div><div class="card"><div class="row"><div class="h2">基础状态</div><b class="ok">全部就绪</b></div><div class="line row clickLine" data-go="network"><span>网络</span><b class="ok">已连接 ›</b></div><div class="line row"><span>电量</span><b class="ok">${d.battery}</b></div><div class="line row clickLine" data-go="sd"><span>SD卡</span><b class="ok">正常 ›</b></div><div class="line row"><span>语音播报</span><span class="switch on"></span></div></div><div class="card"><div class="row"><div class="h2">检查项</div><b class="ok">全部就绪</b></div><div class="line row"><span>${d.role==='head'?'头姿检测':'标定文件'}</span><b class="ok">${d.role==='head'?'正常':'已就绪'}</b></div><div class="line row"><span>固件版本</span><b>最新 1.0.0</b></div>${d.role==='head'?'<div class="line row"><span>头发遮挡（手动确认）</span><b class="ok">已确认</b></div>':''}</div>`;
-      document.getElementById('detailData').innerHTML=`<div class="card"><div class="row"><div class="h2">数据概览</div><b class="ok">可上传</b></div><div class="quickStats"><div class="quickStat"><div class="statIcon">▤</div><div><span class="muted">录制文件</span><div class="name">7条</div></div></div><div class="quickStat"><div class="statIcon">◔</div><div><span class="muted">数据大小</span><div class="name">34MB</div></div></div><div class="quickStat"><div class="statIcon">↥</div><div><span class="muted">已上传</span><div class="name">7条</div></div></div><div class="quickStat"><div class="statIcon">◷</div><div><span class="muted">待上传</span><div class="name">0条</div></div></div></div></div><div class="card"><div class="h2">数据上传</div><div class="line row"><span>自动上传</span><span class="switch on"></span></div><div class="line row"><span>手动上传</span><button class="miniBtn done" data-action="upload">上传</button></div><div class="line row"><span>上传后自动删除</span><span class="switch on"></span></div></div><div class="card"><div class="h2">录制回放</div><div class="line row"><span>浏览SD卡文件</span><b>12个文件 ›</b></div></div>`;
-      document.getElementById('detailMaintain').innerHTML=`<div class="card"><div class="row"><div class="h2">固件与 OTA 升级</div><span class="pill blue">可升级</span></div><div class="line row"><span>当前固件版本</span><b>v1.0.0</b></div><div class="line row"><span>最新可用版本</span><b style="color:var(--blue)">v1.0.1</b></div><div class="line row"><span>设备电量</span><b class="ok">83% · 满足升级</b></div><div class="line row"><span>连接状态</span><b class="ok">蓝牙已连接 / Wi‑Fi 在线</b></div><button class="btn" data-action="ota">检查并升级 OTA</button></div><div class="card"><div class="h2">日志上传</div><div class="hint">用于排查蓝牙、Wi‑Fi、上传、预览、OTA 等问题。日志需脱敏，不包含账号密码和令牌。</div><div class="line row"><span>手机 App 诊断日志</span><b style="color:var(--blue)">可上传 ›</b></div><div class="line row"><span>${d.role==='head'?'头环设备日志':'手环设备日志'}</span><b style="color:var(--blue)">可上传 ›</b></div><button class="btn secondary" data-action="upload">一键上传诊断日志</button></div>`;
+      document.getElementById('detailStatus').innerHTML=`<div class="heroDevice"><div><div style="font-size:34px">${d.role==='head'?'▱':'▯'}</div><div class="ok" style="margin:8px 0 4px">设备 IP</div><b>${d.name} (${d.sn})</b></div></div><div class="card"><div class="row"><div class="h2">基础信息</div><b class="ok">已连接</b></div><div class="line row"><span>设备类型</span><b>${d.role==='head'?'头环':'手环'}</b></div><div class="line row"><span>CPU序列号</span><b>${d.role==='head'?'4a36ed738':'4a3vf0098'}</b></div><div class="line row"><span>固件版本</span><b>1.0.0</b></div><div class="line row"><span>工作状态</span><b>未录制</b></div></div><div class="card"><div class="row"><div class="h2">基础状态</div><b class="ok">全部就绪</b></div><div class="line row clickLine" data-go="network"><span>网络</span><b class="ok">已连接 ›</b></div><div class="line row"><span>电量</span><b class="ok">${d.battery}</b></div><div class="line row clickLine" data-go="sd"><span>SD卡</span><b class="ok">正常 ›</b></div><div class="line row"><span>语音播报</span><span class="switch on"></span></div></div><div class="card"><div class="row"><div class="h2">检查项</div><b class="ok">全部就绪</b></div><div class="line row"><span>${d.role==='head'?'头姿检测':'标定文件'}</span><b class="ok">${d.role==='head'?'正常':'已就绪'}</b></div><div class="line row"><span>固件版本</span><b>最新 1.0.0</b></div>${d.role==='head'?'<div class="line row clickLine" data-action="hairCheck"><span>头发遮挡（手动确认）</span><b class="ok">已确认 ›</b></div>':''}</div>`;
+      document.getElementById('detailData').innerHTML=`<div class="card"><div class="row"><div class="h2">数据概览</div><b class="ok">可上传</b></div><div class="quickStats"><div class="quickStat"><div class="statIcon">▤</div><div><span class="muted">录制文件</span><div class="name">7条</div></div></div><div class="quickStat"><div class="statIcon">◔</div><div><span class="muted">数据大小</span><div class="name">34MB</div></div></div><div class="quickStat"><div class="statIcon">↥</div><div><span class="muted">已上传</span><div class="name">7条</div></div></div><div class="quickStat"><div class="statIcon">◷</div><div><span class="muted">待上传</span><div class="name">0条</div></div></div></div></div><div class="card"><div class="h2">数据上传</div><div class="line row"><span>自动上传</span><span class="switch on"></span></div><div class="line row"><span>手动上传</span><button class="miniBtn done" data-go="sd-files">上传</button></div><div class="line row"><span>上传后自动删除</span><span class="switch on"></span></div></div><div class="card"><div class="h2">录制回放</div><div class="line row clickLine" data-go="sd-files"><span>浏览SD卡文件</span><b>12个文件 ›</b></div></div>`;
+      document.getElementById('detailMaintain').innerHTML=`<div class="card"><div class="row"><div class="h2">固件与 OTA 升级</div><span class="pill blue">可升级</span></div><div class="line row"><span>当前固件版本</span><b>v1.0.0</b></div><div class="line row"><span>最新可用版本</span><b style="color:var(--blue)">v1.0.1</b></div><div class="line row"><span>设备电量</span><b class="ok">83% · 满足升级</b></div><div class="line row"><span>连接状态</span><b class="ok">蓝牙已连接 / Wi‑Fi 在线</b></div><button class="btn" data-action="ota">检查并升级 OTA</button></div><div class="card"><div class="h2">日志上传</div><div class="hint">用于排查蓝牙、Wi‑Fi、上传、预览、OTA 等问题。日志需脱敏，不包含账号密码和令牌。</div><div class="line row"><span>手机 App 诊断日志</span><b style="color:var(--blue)">可上传 ›</b></div><div class="line row"><span>${d.role==='head'?'头环设备日志':'手环设备日志'}</span><b style="color:var(--blue)">可上传 ›</b></div><button class="btn secondary" data-action="diagnosticUpload">一键上传诊断日志</button></div>`;
+    }
+    function renderSdFiles(){
+      const list=document.getElementById('sdFileList');
+      const bar=document.getElementById('sdFileBar');
+      if(!list||!bar)return;
+      list.innerHTML=files.map(f=>{
+        const selected=state.selectedFiles.includes(f.id);
+        return `<div class="fileRow ${state.fileSelect?'selecting':''}" data-file="${f.id}"><span class="checkBox ${selected?'on':''}">${selected?'✓':''}</span><div class="fileIcon">▤</div><div class="grow"><div class="name">${f.name}</div><div class="id">大小: ${f.size}　时长: ${f.duration}</div></div><span class="chev">›</span></div>`;
+      }).join('');
+      if(!state.fileSelect){bar.innerHTML='';return}
+      const all=state.selectedFiles.length===files.length;
+      const count=state.selectedFiles.length;
+      bar.innerHTML=`<div class="fileBar"><span class="checkBox ${all?'on':''}" data-action="selectAllFiles">${all?'✓':''}</span><span class="grow">全选</span><button class="miniBtn" style="background:#fff0f0;color:var(--red)" data-action="deleteFiles">删除 (${count})</button><button class="miniBtn" data-action="batchUpload">批量上传</button></div>`;
     }
     function openSlot(slot){
       modal.querySelector('.sheet').classList.remove('wifiSheet');
       const isHead=slot==='head';
       sheetTitle.textContent=isHead?'选择头环设备':slot==='left'?'选择左手环设备':'选择右手环设备';
       const choices=online().filter(d=>isHead?d.role==='head':d.role==='ring');
-      sheetBody.innerHTML=(slot!=='head'?'<div class="sheetItem" data-pick="none"><span>不分配</span><b class="warn">未分配</b></div>':'')+(choices.length?choices.map(d=>`<div class="sheetItem" data-pick="${d.id}" data-pick-slot="${slot}"><span>${d.name}<br><span class="small">${d.sn}</span></span><b class="ok">${state.slots[slot]===d.id?'已选择':'可选'}</b></div>`).join(''):'<div class="sheetItem disabled"><span>暂无可用设备</span><b>--</b></div><button class="btn" data-go="add" style="margin:10px 0">去新增设备</button>');
+      sheetBody.innerHTML=(slot!=='head'?'<div class="sheetItem" data-pick="none"><span>不分配</span><b class="warn">未分配</b></div>':'')+(choices.length?choices.map(d=>`<div class="sheetItem" data-pick="${d.id}" data-pick-slot="${slot}"><span>${d.name}<br><span class="small">${d.sn}</span></span><b class="ok">${state.slots[slot]===d.id?'已选择':'可选'}</b></div>`).join(''):'<div class="sheetItem disabled"><span>暂无可用设备</span><b>--</b></div><button class="btn" data-go="add" style="margin:10px 0">去新增设备</button>')+'<button class="btn plain" style="margin-top:12px" data-action="closeModal">取消</button>';
       sheetBody.dataset.slot=slot;modal.classList.add('show');
     }
     function openWifi(name){
@@ -251,30 +289,111 @@
       sheetBody.innerHTML=`<div class="row"><div><div class="h2">${name}</div><div class="hint">5GHz · 信号强 · RSSI -42 dBm</div></div><span class="pill blue">已选择</span></div><div class="label">Wi‑Fi 密码</div><div class="row"><input class="input" type="password" placeholder="请输入密码" style="flex:1"><button class="rightText" style="position:static;padding:0">隐藏</button></div><label class="row" style="justify-content:flex-start;margin:14px 0 8px"><input type="checkbox"><span class="muted">下发后由设备保存该网络配置</span></label><div class="hint">密码仅用于配置设备，不在日志中明文展示。</div><div class="row" style="margin-top:16px"><button class="btn plain" data-action="closeModal">取消</button><button class="btn" data-action="connectWifi">开始连接</button></div>`;
       modal.classList.add('show');
     }
+    function resetModal(){
+      modal.classList.remove('dialogMode');
+      modal.querySelector('.sheet').classList.remove('wifiSheet','dialogSheet');
+    }
+    function openDialog(kind){
+      resetModal();
+      modal.classList.add('dialogMode');
+      modal.querySelector('.sheet').classList.add('dialogSheet');
+      const dialogs={
+        hair:{
+          title:'头发遮挡检查',
+          body:'请手动确认头环佩戴区域是否有头发遮挡传感器，遮挡会影响脑电数据采集的准确性。',
+          content:'<div class="row" style="margin-top:18px"><button class="btn plain" data-action="recheckHair">重新检测</button><button class="btn" data-action="confirmHair">确认无遮挡</button></div>'
+        },
+        format:{
+          title:'格式化 SD 卡',
+          body:'格式化将清除 SD 卡上所有数据，此操作不可恢复。确定要继续吗？',
+          icon:'<div class="dialogIcon red">⚠</div>',
+          content:'<button class="btn" style="background:var(--red);margin-top:18px" data-action="confirmFormat">确认格式化</button><button class="btn plain" style="margin-top:12px;border:0;color:#111827" data-action="closeModal">取消</button>'
+        },
+        diagnostic:{
+          title:'上传诊断日志',
+          body:'上传的日志将仅用于研发团队排查设备通信、采集状态等问题。不包含用户账户或隐私凭证。',
+          content:'<div class="line row"><span>手机 App 诊断日志</span><b class="ok">已完成</b></div><div class="progress"><div class="bar" style="width:100%;background:#56be82"></div></div><div class="line row"><span>头环设备诊断日志</span><b style="color:var(--blue)">上传中 (45%)</b></div><div class="progress"><div class="bar" style="width:45%"></div></div><div class="row" style="align-items:flex-start;justify-content:flex-start;margin:18px 0;color:#6c778c;font-size:13px;line-height:1.45"><span style="font-weight:900">ⓘ</span><span>上传的日志将仅用于研发团队排查设备通信、采集状态等问题。不包含用户账户或隐私凭证。</span></div><button class="btn" style="margin-top:18px" data-action="diagnosticDone">上传中</button><button class="btn plain" style="margin-top:12px;border:0;color:#667085" data-action="closeModal">取消</button>'
+        },
+        diagnosticDone:{
+          title:'上传诊断日志',
+          body:'上传的日志将仅用于研发团队排查设备通信、采集状态等问题。不包含用户账户或隐私凭证。',
+          content:'<div class="line row"><span>手机 App 诊断日志</span><b class="ok">已完成</b></div><div class="progress"><div class="bar" style="width:100%;background:#56be82"></div></div><div class="line row"><span>头环设备诊断日志</span><b class="ok">已完成</b></div><div class="progress"><div class="bar" style="width:100%;background:#56be82"></div></div><div class="row" style="align-items:flex-start;justify-content:flex-start;margin:18px 0;color:#6c778c;font-size:13px;line-height:1.45"><span style="font-weight:900">ⓘ</span><span>上传的日志将仅用于研发团队排查设备通信、采集状态等问题。不包含用户账户或隐私凭证。</span></div><button class="btn" style="margin-top:18px" data-action="closeModal">上传成功</button><button class="btn plain" style="margin-top:12px;border:0;color:#667085" data-action="closeModal">返回</button>'
+        },
+        ota:{
+          title:'固件升级',
+          body:'检测到新的头环固件版本，请确认设备电量充足并保持 Wi‑Fi 在线。',
+          icon:'<div class="dialogIcon blue">↑</div><span class="pill blue" style="position:absolute;right:24px;top:20px">可升级</span>',
+          content:'<div class="line row" style="margin-top:18px"><span>当前版本</span><b>v1.0.0</b></div><div class="line row"><span>最新版本</span><b style="color:var(--blue)">v1.0.1</b></div><div class="row" style="margin-top:18px"><button class="btn" data-action="startOta">开始升级</button><button class="btn plain" data-action="closeModal">取消</button></div>'
+        },
+        otaProgress:{
+          title:'固件升级中',
+          body:'正在写入新固件，请保持头环连接并不要退出当前页面。',
+          icon:'<div class="dialogIcon blue">↻</div>',
+          content:'<div class="line row" style="border:0;margin-top:12px"><span><b>升级进度</b></span><b style="color:var(--blue)">45%</b></div><div class="progress"><div class="bar" style="width:45%"></div></div><div style="margin-top:14px;background:#f4f7fd;border-radius:10px;padding:12px;color:#6c778c;font-size:13px;text-align:center">预计还需 2 分钟，完成后设备将自动重启。</div><button class="btn" style="margin-top:18px" data-action="closeModal">升级中</button>'
+        }
+      };
+      const d=dialogs[kind];
+      sheetTitle.textContent=d.title;
+      const bodyHtml=kind==='diagnostic'||kind==='diagnosticDone'
+        ? ''
+        : kind==='ota'||kind==='otaProgress'
+        ? `<div class="hint" style="font-size:14px;text-align:center">${d.body}</div>`
+        : `<div class="hint" style="font-size:14px;text-align:${kind==='hair'?'left':'center'}">${d.body}</div>`;
+      sheetBody.innerHTML=(d.icon||'')+bodyHtml+d.content;
+      modal.classList.add('show');
+    }
+    let filePressTimer=null;
+    let fileLongPress=false;
+    app.addEventListener('pointerdown',e=>{
+      const file=e.target.closest('[data-file]');
+      if(!file)return;
+      clearTimeout(filePressTimer);
+      fileLongPress=false;
+      filePressTimer=setTimeout(()=>{
+        const id=file.dataset.file;
+        state.fileSelect=true;
+        if(!state.selectedFiles.includes(id))state.selectedFiles.push(id);
+        fileLongPress=true;
+        renderSdFiles();
+        say('已进入文件选择模式');
+      },520);
+    });
+    ['pointerup','pointercancel','pointerleave'].forEach(type=>app.addEventListener(type,()=>clearTimeout(filePressTimer)));
     app.addEventListener('click',e=>{
       const pick=e.target.closest('[data-pick]'); if(pick&&!pick.classList.contains('disabled')){const slotName=sheetBody.dataset.slot;if(pick.dataset.pick==='none')state.slots[slotName]=null;else state.slots[slotName]=pick.dataset.pick;state.grouped=false;save();modal.classList.remove('show');render();say('槽位已更新');return}
-      const go=e.target.closest('[data-go]'); if(go){modal.classList.remove('show');show(go.dataset.go);return}
+      const go=e.target.closest('[data-go]'); if(go){if(go.dataset.go==='sd-files'){state.detailTab='data';state.fileSelect=false;state.selectedFiles=[]}modal.classList.remove('show');resetModal();show(go.dataset.go);return}
       const navBtn=e.target.closest('[data-nav]'); if(navBtn){show(navBtn.dataset.nav);return}
       const connect=e.target.closest('[data-connect]'); if(connect){if(!state.connected.includes(connect.dataset.connect))state.connected.push(connect.dataset.connect);save();render();say('设备连接成功，已保存到设备列表');return}
-      const detail=e.target.closest('[data-detail]'); if(detail){state.detail=detail.dataset.detail;save();show('detail');return}
+      const detail=e.target.closest('[data-detail]'); if(detail){state.detail=detail.dataset.detail;state.detailTab='status';save();show('detail');return}
       const slot=e.target.closest('[data-slot]'); if(slot){openSlot(slot.dataset.slot);return}
       const wifi=e.target.closest('[data-wifi]'); if(wifi){openWifi(wifi.dataset.wifi);return}
-      const tab=e.target.closest('[data-tab]'); if(tab){app.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b===tab));document.getElementById('detailStatus').hidden=tab.dataset.tab!=='status';document.getElementById('detailData').hidden=tab.dataset.tab!=='data';document.getElementById('detailMaintain').hidden=tab.dataset.tab!=='maintain';return}
+      const tab=e.target.closest('[data-tab]'); if(tab){state.detailTab=tab.dataset.tab;setDetailTab(tab.dataset.tab);return}
       const sw=e.target.closest('.switch'); if(sw){sw.classList.toggle('on');return}
+      const file=e.target.closest('[data-file]'); if(file){if(fileLongPress){fileLongPress=false;return}if(state.fileSelect){const id=file.dataset.file;state.selectedFiles=state.selectedFiles.includes(id)?state.selectedFiles.filter(x=>x!==id):[...state.selectedFiles,id];if(!state.selectedFiles.length)state.fileSelect=false;renderSdFiles();}else say('长按文件可进入选择模式');return}
       const act=e.target.closest('[data-action]'); if(!act)return;
       const a=act.dataset.action;
-      if(a==='login'){show('home');say('登录成功');}
+      if(a==='login'){resetDemo();show('home');say('登录成功');}
       if(a==='scan')say('蓝牙扫描已刷新');
       if(a==='qr')say('已打开扫码绑定流程');
       if(a==='confirmGroup'){state.grouped=true;save();show('home');say('编组成功');}
       if(a==='startCollect')say('正式采集已开始');
-      if(a==='formatSd')say('已进入格式化确认流程');
-      if(a==='ota')say('正在检查 OTA 更新');
+      if(a==='formatSd')openDialog('format');
+      if(a==='hairCheck')openDialog('hair');
+      if(a==='diagnosticUpload')openDialog('diagnostic');
+      if(a==='diagnosticDone')openDialog('diagnosticDone');
+      if(a==='recheckHair')say('已重新检测头发遮挡');
+      if(a==='confirmHair'){modal.classList.remove('show');resetModal();say('已确认无遮挡');}
+      if(a==='confirmFormat'){modal.classList.remove('show');resetModal();say('SD 卡格式化已确认');}
+      if(a==='selectAllFiles'){state.fileSelect=true;state.selectedFiles=state.selectedFiles.length===files.length?[]:files.map(f=>f.id);if(!state.selectedFiles.length)state.fileSelect=false;renderSdFiles();}
+      if(a==='batchUpload')say(state.selectedFiles.length?'已开始批量上传所选文件':'请先选择文件');
+      if(a==='deleteFiles')say(state.selectedFiles.length?'已删除所选文件':'请先选择文件');
+      if(a==='ota')openDialog('ota');
+      if(a==='startOta')openDialog('otaProgress');
       if(a==='upload')say('数据上传已开始');
       if(a==='reboot')say('设备重启指令已发送');
       if(a==='unbind')say('此处可接入解绑确认弹窗');
-      if(a==='connectWifi'){modal.classList.remove('show');modal.querySelector('.sheet').classList.remove('wifiSheet');say('Wi‑Fi 连接成功');}
-      if(a==='closeModal'){modal.classList.remove('show');modal.querySelector('.sheet').classList.remove('wifiSheet');}
+      if(a==='connectWifi'){modal.classList.remove('show');resetModal();say('Wi‑Fi 连接成功');}
+      if(a==='closeModal'){modal.classList.remove('show');resetModal();}
       if(a==='logout'){show('login');say('已退出登录');}
     });
     document.getElementById('detailBack').addEventListener('click',()=>show(state.grouped?'group':'home'));
