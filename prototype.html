@@ -301,7 +301,7 @@
         hair:{
           title:'头发遮挡检查',
           body:'请手动确认头环佩戴区域是否有头发遮挡传感器，遮挡会影响脑电数据采集的准确性。',
-          content:'<div class="row" style="margin-top:18px"><button class="btn plain" data-action="recheckHair">重新检测</button><button class="btn" data-action="confirmHair">确认无遮挡</button></div>'
+          content:'<div style="margin-top:18px;text-align:center"><button class="btn" style="min-width:170px" data-action="confirmHair">确认无遮挡</button></div>'
         },
         format:{
           title:'格式化 SD 卡',
@@ -381,8 +381,7 @@
       if(a==='hairCheck')openDialog('hair');
       if(a==='diagnosticUpload')openDialog('diagnostic');
       if(a==='diagnosticDone')openDialog('diagnosticDone');
-      if(a==='recheckHair')say('已重新检测头发遮挡');
-      if(a==='confirmHair'){modal.classList.remove('show');resetModal();say('已确认无遮挡');}
+      if(a==='confirmHair'){e.preventDefault();e.stopPropagation();modal.classList.remove('show');resetModal();say('已确认无遮挡');return;}
       if(a==='confirmFormat'){modal.classList.remove('show');resetModal();say('SD 卡格式化已确认');}
       if(a==='selectAllFiles'){state.fileSelect=true;state.selectedFiles=state.selectedFiles.length===files.length?[]:files.map(f=>f.id);if(!state.selectedFiles.length)state.fileSelect=false;renderSdFiles();}
       if(a==='batchUpload')say(state.selectedFiles.length?'已开始批量上传所选文件':'请先选择文件');
