@@ -161,6 +161,7 @@
     const modal=document.getElementById('modal');
     const sheetTitle=document.getElementById('sheetTitle');
     const sheetBody=document.getElementById('sheetBody');
+    let suppressClicksUntil=0;
     const catalog=[
       {id:'headA',role:'head',name:'头环 A',sn:'SSI-HD-091A',battery:'85%',storage:'14.2 GB',firmware:'v1.2.0'},
       {id:'leftB',role:'ring',name:'左手环 B',sn:'SSI-BL-880B',battery:'94%',storage:'7.8 GB',firmware:'v1.1.5'},
@@ -360,6 +361,7 @@
     });
     ['pointerup','pointercancel','pointerleave'].forEach(type=>app.addEventListener(type,()=>clearTimeout(filePressTimer)));
     app.addEventListener('click',e=>{
+      if(Date.now()<suppressClicksUntil && !e.target.closest('#modal'))return;
       const pick=e.target.closest('[data-pick]'); if(pick&&!pick.classList.contains('disabled')){const slotName=sheetBody.dataset.slot;if(pick.dataset.pick==='none')state.slots[slotName]=null;else state.slots[slotName]=pick.dataset.pick;state.grouped=false;save();modal.classList.remove('show');render();say('槽位已更新');return}
       const go=e.target.closest('[data-go]'); if(go){if(go.dataset.go==='sd-files'){state.detailTab='data';state.fileSelect=false;state.selectedFiles=[]}modal.classList.remove('show');resetModal();show(go.dataset.go);return}
       const navBtn=e.target.closest('[data-nav]'); if(navBtn){show(navBtn.dataset.nav);return}
@@ -381,7 +383,7 @@
       if(a==='hairCheck')openDialog('hair');
       if(a==='diagnosticUpload')openDialog('diagnostic');
       if(a==='diagnosticDone')openDialog('diagnosticDone');
-      if(a==='confirmHair'){e.preventDefault();e.stopPropagation();modal.classList.remove('show');resetModal();say('已确认无遮挡');return;}
+      if(a==='confirmHair'){e.preventDefault();e.stopPropagation();suppressClicksUntil=Date.now()+450;modal.classList.remove('show');resetModal();say('已确认无遮挡');return;}
       if(a==='confirmFormat'){modal.classList.remove('show');resetModal();say('SD 卡格式化已确认');}
       if(a==='selectAllFiles'){state.fileSelect=true;state.selectedFiles=state.selectedFiles.length===files.length?[]:files.map(f=>f.id);if(!state.selectedFiles.length)state.fileSelect=false;renderSdFiles();}
       if(a==='batchUpload')say(state.selectedFiles.length?'已开始批量上传所选文件':'请先选择文件');
