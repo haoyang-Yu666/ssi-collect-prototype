@@ -175,10 +175,18 @@
       {id:'f5',name:'REC_20260408_0845.ssi',size:'5.0 MB',duration:'35 分 12 秒'}
     ];
     const initialState={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA'};
-    const state={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA',fileSelect:false,selectedFiles:[]};
-    function resetDemo(){state.connected=[];state.slots={head:null,left:null,right:null};state.grouped=false;state.last='home';state.detail='headA';state.fileSelect=false;state.selectedFiles=[]}
+    const state={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA',fileSelect:false,selectedFiles:[],recording:false,recordStart:0};
+    function resetDemo(){state.connected=[];state.slots={head:null,left:null,right:null};state.grouped=false;state.last='home';state.detail='headA';state.fileSelect=false;state.selectedFiles=[];state.recording=false;state.recordStart=0}
     function save(){}
     function say(t){toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1500)}
+    function formatDuration(ms){
+      const seconds=Math.max(0,Math.floor(ms/1000));
+      const h=String(Math.floor(seconds/3600)).padStart(2,'0');
+      const m=String(Math.floor((seconds%3600)/60)).padStart(2,'0');
+      const s=String(seconds%60).padStart(2,'0');
+      return `${h}:${m}:${s}`;
+    }
+    function recordingLabel(){return state.recording&&state.recordStart?`采集中 ${formatDuration(Date.now()-state.recordStart)}`:'未采集'}
     function online(){return catalog.filter(d=>state.connected.includes(d.id))}
     function device(id){return catalog.find(d=>d.id===id)}
     function iconFor(d){return d.role==='head'?'头':'环'}
@@ -254,7 +262,7 @@
       if(sections[1]) sections[1].textContent='多路预录制预览';
       if(cards[0]) cards[0].innerHTML=`<div class="row"><div class="h2">设备组状态摘要</div><span class="pill green">同步就绪</span></div><div class="groupGrid" style="margin-top:12px">${slotTile('left')}${slotTile('head')}${slotTile('right')}</div><div class="ok" style="text-align:center;margin-top:12px">可以正常录制</div>`;
       if(cards[1]) cards[1].innerHTML=`<div class="row"><div class="h2">采集前检查</div><b class="ok">全部通过</b></div><div class="line row"><span>成员完整性</span><b class="ok">通过</b></div><div class="line row"><span>左右槽位与 SN</span><b class="ok">一致</b></div><div class="line row"><span>连接心跳与时间同步</span><b class="ok">正常</b></div><div class="line row"><span>电量/存储/固件/标定</span><b class="ok">满足</b></div>`;
-      if(cards[2]) cards[2].innerHTML=`<div class="row clickLine" data-go="preview"><div class="h2">多路预录制预览</div><span class="chev">›</span></div><div class="previewThumbs"><div class="previewCard"><div class="video"></div><div class="previewLabel">头环 5路<span class="ok">正常</span></div></div><div class="previewCard"><div class="video"></div><div class="previewLabel">左手环 480p<span class="ok">正常</span></div></div><div class="previewCard"><div class="video"></div><div class="previewLabel">右手环 480p<span class="ok">正常</span></div></div></div><button class="btn" style="margin-top:14px" data-action="startCollect">▶ 开始采集</button>`;
+      if(cards[2]) cards[2].innerHTML=`<div class="row clickLine" data-go="preview"><div class="h2">多路预录制预览</div><b class="ok">${recordingLabel()}</b></div><div class="previewThumbs"><div class="previewCard"><div class="video"></div><div class="previewLabel">头环 5路<span class="ok">正常</span></div></div><div class="previewCard"><div class="video"></div><div class="previewLabel">左手环 480p<span class="ok">正常</span></div></div><div class="previewCard"><div class="video"></div><div class="previewLabel">右手环 480p<span class="ok">正常</span></div></div></div><button class="btn" style="margin-top:14px" data-action="startCollect">${state.recording?'▣ 停止采集':'▶ 开始采集'}</button>`;
     }
     function renderDetail(){
       const d=device(state.detail)||catalog[0];
@@ -378,7 +386,7 @@
       if(a==='scan')say('蓝牙扫描已刷新');
       if(a==='qr')say('已打开扫码绑定流程');
       if(a==='confirmGroup'){state.grouped=true;save();show('home');say('编组成功');}
-      if(a==='startCollect')say('正式采集已开始');
+      if(a==='startCollect'){state.recording=!state.recording;state.recordStart=state.recording?Date.now():0;save();renderGroup();say(state.recording?'采集已开始':'采集已停止');}
       if(a==='formatSd')openDialog('format');
       if(a==='hairCheck')openDialog('hair');
       if(a==='diagnosticUpload')openDialog('diagnostic');
@@ -398,6 +406,7 @@
       if(a==='logout'){show('login');say('已退出登录');}
     });
     document.getElementById('detailBack').addEventListener('click',()=>show(state.grouped?'group':'home'));
+    setInterval(()=>{if(state.recording&&document.querySelector('[data-screen="group"]').classList.contains('active'))renderGroup()},1000);
     render(); nav.style.display='none'; app.classList.add('loginMode');
   </script>
 </body>
