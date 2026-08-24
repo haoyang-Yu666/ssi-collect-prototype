@@ -296,7 +296,7 @@
       sheetTitle.textContent=isHead?'选择头环设备':slot==='left'?'选择左手环设备':'选择右手环设备';
       const choices=online().filter(d=>isHead?d.role==='head':d.role==='ring');
       const noneSelected=!state.pendingSlot.value;
-      sheetBody.innerHTML=(slot!=='head'?`<div class="sheetItem" data-pick="none"><span>不分配</span><b class="warn">${noneSelected?'已选择':'未分配'}</b></div>`:'')+(choices.length?choices.map(d=>`<div class="sheetItem" data-pick="${d.id}" data-pick-slot="${slot}"><span>${d.name}<br><span class="small">${d.sn}</span></span><b class="ok">${state.pendingSlot.value===d.id?'已选择':'可选'}</b></div>`).join(''):'<div class="sheetItem disabled"><span>暂无可用设备</span><b>--</b></div><button class="btn" data-go="add" style="margin:10px 0">去新增设备</button>')+(choices.length?'<div class="row" style="margin-top:14px"><button class="btn" data-action="saveSlot">保存</button><button class="btn plain" data-action="closeModal">返回</button></div>':'<button class="btn plain" style="margin-top:12px" data-action="closeModal">返回</button>');
+      sheetBody.innerHTML=(slot!=='head'?`<div class="sheetItem" data-pick="none"><span>不分配</span><b class="warn">${noneSelected?'已选择':'未分配'}</b></div>`:'')+(choices.length?choices.map(d=>`<div class="sheetItem" data-pick="${d.id}" data-pick-slot="${slot}"><span>${d.name}<br><span class="small">${d.sn}</span></span><b class="ok">${state.pendingSlot.value===d.id?'已选择':'可选'}</b></div>`).join(''):'<div class="sheetItem disabled"><span>暂无可用设备</span><b>--</b></div><button class="btn" data-go="add" style="margin:10px 0">去新增设备</button>')+(choices.length?'<div class="row" style="margin-top:14px"><button class="btn" data-action="saveSlot">保存</button><button class="btn plain" data-action="closeSlotModal">返回</button></div>':'<button class="btn plain" style="margin-top:12px" data-action="closeSlotModal">返回</button>');
       sheetBody.dataset.slot=slot;
     }
     function openWifi(name){
@@ -358,6 +358,11 @@
       sheetBody.innerHTML=(d.icon||'')+bodyHtml+d.content;
       modal.classList.add('show');
     }
+    function closeSlotModal(){
+      modal.classList.remove('show');
+      state.pendingSlot=null;
+      resetModal();
+    }
     let filePressTimer=null;
     let fileLongPress=false;
     app.addEventListener('pointerdown',e=>{
@@ -394,6 +399,7 @@
       if(a==='qr')say('已打开扫码绑定流程');
       if(a==='confirmGroup'){state.grouped=true;save();show('home');say('编组成功');}
       if(a==='saveSlot'){const slotName=state.pendingSlot.slot;state.slots[slotName]=state.pendingSlot.value;state.grouped=false;save();modal.classList.remove('show');state.pendingSlot=null;render();say('槽位已保存');}
+      if(a==='closeSlotModal'){closeSlotModal();return;}
       if(a==='startCollect'){state.recording=!state.recording;state.recordStart=state.recording?Date.now():0;save();renderGroup();say(state.recording?'采集已开始':'采集已停止');}
       if(a==='formatSd')openDialog('format');
       if(a==='hairCheck')openDialog('hair');
@@ -412,6 +418,13 @@
       if(a==='connectWifi'){modal.classList.remove('show');resetModal();say('Wi‑Fi 连接成功');}
       if(a==='closeModal'){modal.classList.remove('show');state.pendingSlot=null;resetModal();}
       if(a==='logout'){show('login');say('已退出登录');}
+    });
+    modal.addEventListener('click',e=>{
+      const back=e.target.closest('[data-action="closeSlotModal"]');
+      if(!back)return;
+      e.preventDefault();
+      e.stopPropagation();
+      closeSlotModal();
     });
     document.getElementById('detailBack').addEventListener('click',()=>show(state.grouped?'group':'home'));
     setInterval(()=>{if(state.recording&&document.querySelector('[data-screen="group"]').classList.contains('active'))renderGroup()},1000);
