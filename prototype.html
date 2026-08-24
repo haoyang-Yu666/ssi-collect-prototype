@@ -175,8 +175,8 @@
       {id:'f5',name:'REC_20260408_0845.ssi',size:'5.0 MB',duration:'35 分 12 秒'}
     ];
     const initialState={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA'};
-    const state={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA',fileSelect:false,selectedFiles:[],recording:false,recordStart:0};
-    function resetDemo(){state.connected=[];state.slots={head:null,left:null,right:null};state.grouped=false;state.last='home';state.detail='headA';state.fileSelect=false;state.selectedFiles=[];state.recording=false;state.recordStart=0}
+    const state={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA',fileSelect:false,selectedFiles:[],recording:false,recordStart:0,pendingSlot:null};
+    function resetDemo(){state.connected=[];state.slots={head:null,left:null,right:null};state.grouped=false;state.last='home';state.detail='headA';state.fileSelect=false;state.selectedFiles=[];state.recording=false;state.recordStart=0;state.pendingSlot=null}
     function save(){}
     function say(t){toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1500)}
     function formatDuration(ms){
@@ -286,11 +286,18 @@
     }
     function openSlot(slot){
       modal.querySelector('.sheet').classList.remove('wifiSheet');
+      state.pendingSlot={slot,value:state.slots[slot]||null};
+      renderSlotSheet();
+      modal.classList.add('show');
+    }
+    function renderSlotSheet(){
+      const slot=state.pendingSlot.slot;
       const isHead=slot==='head';
       sheetTitle.textContent=isHead?'选择头环设备':slot==='left'?'选择左手环设备':'选择右手环设备';
       const choices=online().filter(d=>isHead?d.role==='head':d.role==='ring');
-      sheetBody.innerHTML=(slot!=='head'?'<div class="sheetItem" data-pick="none"><span>不分配</span><b class="warn">未分配</b></div>':'')+(choices.length?choices.map(d=>`<div class="sheetItem" data-pick="${d.id}" data-pick-slot="${slot}"><span>${d.name}<br><span class="small">${d.sn}</span></span><b class="ok">${state.slots[slot]===d.id?'已选择':'可选'}</b></div>`).join(''):'<div class="sheetItem disabled"><span>暂无可用设备</span><b>--</b></div><button class="btn" data-go="add" style="margin:10px 0">去新增设备</button>')+'<button class="btn plain" style="margin-top:12px" data-action="closeModal">取消</button>';
-      sheetBody.dataset.slot=slot;modal.classList.add('show');
+      const noneSelected=!state.pendingSlot.value;
+      sheetBody.innerHTML=(slot!=='head'?`<div class="sheetItem" data-pick="none"><span>不分配</span><b class="warn">${noneSelected?'已选择':'未分配'}</b></div>`:'')+(choices.length?choices.map(d=>`<div class="sheetItem" data-pick="${d.id}" data-pick-slot="${slot}"><span>${d.name}<br><span class="small">${d.sn}</span></span><b class="ok">${state.pendingSlot.value===d.id?'已选择':'可选'}</b></div>`).join(''):'<div class="sheetItem disabled"><span>暂无可用设备</span><b>--</b></div><button class="btn" data-go="add" style="margin:10px 0">去新增设备</button>')+(choices.length?'<div class="row" style="margin-top:14px"><button class="btn" data-action="saveSlot">保存</button><button class="btn plain" data-action="closeModal">返回</button></div>':'<button class="btn plain" style="margin-top:12px" data-action="closeModal">返回</button>');
+      sheetBody.dataset.slot=slot;
     }
     function openWifi(name){
       modal.querySelector('.sheet').classList.add('wifiSheet');
@@ -370,7 +377,7 @@
     ['pointerup','pointercancel','pointerleave'].forEach(type=>app.addEventListener(type,()=>clearTimeout(filePressTimer)));
     app.addEventListener('click',e=>{
       if(Date.now()<suppressClicksUntil && !e.target.closest('#modal'))return;
-      const pick=e.target.closest('[data-pick]'); if(pick&&!pick.classList.contains('disabled')){const slotName=sheetBody.dataset.slot;if(pick.dataset.pick==='none')state.slots[slotName]=null;else state.slots[slotName]=pick.dataset.pick;state.grouped=false;save();modal.classList.remove('show');render();say('槽位已更新');return}
+      const pick=e.target.closest('[data-pick]'); if(pick&&!pick.classList.contains('disabled')){state.pendingSlot.value=pick.dataset.pick==='none'?null:pick.dataset.pick;renderSlotSheet();return}
       const go=e.target.closest('[data-go]'); if(go){if(go.dataset.go==='sd-files'){state.detailTab='data';state.fileSelect=false;state.selectedFiles=[]}modal.classList.remove('show');resetModal();show(go.dataset.go);return}
       const navBtn=e.target.closest('[data-nav]'); if(navBtn){show(navBtn.dataset.nav);return}
       const connect=e.target.closest('[data-connect]'); if(connect){if(!state.connected.includes(connect.dataset.connect))state.connected.push(connect.dataset.connect);save();render();say('设备连接成功，已保存到设备列表');return}
@@ -386,6 +393,7 @@
       if(a==='scan')say('蓝牙扫描已刷新');
       if(a==='qr')say('已打开扫码绑定流程');
       if(a==='confirmGroup'){state.grouped=true;save();show('home');say('编组成功');}
+      if(a==='saveSlot'){const slotName=state.pendingSlot.slot;state.slots[slotName]=state.pendingSlot.value;state.grouped=false;save();modal.classList.remove('show');state.pendingSlot=null;render();say('槽位已保存');}
       if(a==='startCollect'){state.recording=!state.recording;state.recordStart=state.recording?Date.now():0;save();renderGroup();say(state.recording?'采集已开始':'采集已停止');}
       if(a==='formatSd')openDialog('format');
       if(a==='hairCheck')openDialog('hair');
@@ -402,7 +410,7 @@
       if(a==='reboot')say('设备重启指令已发送');
       if(a==='unbind')say('此处可接入解绑确认弹窗');
       if(a==='connectWifi'){modal.classList.remove('show');resetModal();say('Wi‑Fi 连接成功');}
-      if(a==='closeModal'){modal.classList.remove('show');resetModal();}
+      if(a==='closeModal'){modal.classList.remove('show');state.pendingSlot=null;resetModal();}
       if(a==='logout'){show('login');say('已退出登录');}
     });
     document.getElementById('detailBack').addEventListener('click',()=>show(state.grouped?'group':'home'));
