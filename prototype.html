@@ -175,9 +175,9 @@
       {id:'f5',name:'REC_20260408_0845.ssi',size:'5.0 MB',duration:'35 分 12 秒'}
     ];
     const NONE_SLOT='__none__';
-    const initialState={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA'};
-    const state={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA',fileSelect:false,selectedFiles:[],recording:false,recordStart:0,pendingSlot:null};
-    function resetDemo(){state.connected=[];state.slots={head:null,left:null,right:null};state.grouped=false;state.last='home';state.detail='headA';state.fileSelect=false;state.selectedFiles=[];state.recording=false;state.recordStart=0;state.pendingSlot=null}
+    const initialState={connected:[],slots:{head:null,left:null,right:null},slotTouched:{head:false,left:false,right:false},grouped:false,last:'home',detail:'headA'};
+    const state={connected:[],slots:{head:null,left:null,right:null},slotTouched:{head:false,left:false,right:false},grouped:false,last:'home',detail:'headA',fileSelect:false,selectedFiles:[],recording:false,recordStart:0,pendingSlot:null};
+    function resetDemo(){state.connected=[];state.slots={head:null,left:null,right:null};state.slotTouched={head:false,left:false,right:false};state.grouped=false;state.last='home';state.detail='headA';state.fileSelect=false;state.selectedFiles=[];state.recording=false;state.recordStart=0;state.pendingSlot=null}
     function save(){}
     function say(t){toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1500)}
     function formatDuration(ms){
@@ -208,8 +208,8 @@
     }
     function prefillSlots(){
       const list=online();
-      if(!state.slots.head){const head=list.find(d=>d.role==='head'); if(head) state.slots.head=head.id}
-      if(!state.slots.left){const ring=list.find(d=>d.role==='ring'&&d.id!==state.slots.right); if(ring) state.slots.left=ring.id}
+      if(!state.slotTouched.head&&!state.slots.head){const head=list.find(d=>d.role==='head'); if(head) state.slots.head=head.id}
+      if(!state.slotTouched.left&&!state.slots.left){const ring=list.find(d=>d.role==='ring'&&d.id!==state.slots.right); if(ring) state.slots.left=ring.id}
       save();
     }
     function render(){
@@ -244,7 +244,7 @@
       document.getElementById('scanList').innerHTML='<div class="row" style="margin-bottom:16px"><div><div class="h2">蓝牙扫描</div><div class="hint">请确保设备已开机，并处于可发现状态</div></div><button class="miniBtn" data-action="scan">刷新</button></div>'+catalog.map(d=>`<div class="device ${d.offline?'disabled':''}"><div class="deviceIcon">${iconFor(d)}</div><div class="grow"><div class="name">${scanNames[d.id][0]}</div><div class="id">${scanNames[d.id][1]}</div></div>${d.offline?'<span class="pill orange">离线</span>':state.connected.includes(d.id)?'<button class="miniBtn done" disabled>已连接</button>':`<button class="miniBtn" data-connect="${d.id}">连接</button>`}</div>`).join('');
     }
     function renderPair(){
-      ['head','left','right'].forEach(slot=>{const el=document.getElementById(slot==='head'?'slotHead':slot==='left'?'slotLeft':'slotRight');const d=device(state.slots[slot]);el.textContent=d?d.name:(slot==='head'?'选择':slot==='left'?'选择':'未分配');el.classList.toggle('warn',!d&&slot!=='head')});
+      ['head','left','right'].forEach(slot=>{const el=document.getElementById(slot==='head'?'slotHead':slot==='left'?'slotLeft':'slotRight');const d=device(state.slots[slot]);const manuallyNone=state.slots[slot]===NONE_SLOT;el.textContent=d?d.name:(slot==='head'?'选择':(manuallyNone||slot==='right'?'未分配':'选择'));el.classList.toggle('warn',!d&&slot!=='head')});
       const count=online().length;document.getElementById('readCount').textContent=`已读取 ${count} 台在线设备`;
       document.getElementById('pairAlert').innerHTML=catalog.some(d=>d.offline)?'<div class="alert">⚠ 右手环 C 离线，暂不可分配。</div>':'';
       document.getElementById('confirmGroup').disabled=!state.slots.head;
@@ -287,7 +287,7 @@
     }
     function openSlot(slot){
       modal.querySelector('.sheet').classList.remove('wifiSheet');
-      state.pendingSlot={slot,value:state.slots[slot]||null};
+      state.pendingSlot={slot,value:state.slots[slot]??null};
       renderSlotSheet();
       modal.classList.add('show');
     }
@@ -399,7 +399,7 @@
       if(a==='scan')say('蓝牙扫描已刷新');
       if(a==='qr')say('已打开扫码绑定流程');
       if(a==='confirmGroup'){state.grouped=true;save();show('home');say('编组成功');}
-      if(a==='saveSlot'){const slotName=state.pendingSlot.slot;state.slots[slotName]=state.pendingSlot.value;state.grouped=false;save();modal.classList.remove('show');state.pendingSlot=null;render();say('槽位已保存');}
+      if(a==='saveSlot'){const slotName=state.pendingSlot.slot;state.slots[slotName]=state.pendingSlot.value;state.slotTouched[slotName]=true;state.grouped=false;save();modal.classList.remove('show');state.pendingSlot=null;render();say('槽位已保存');}
       if(a==='closeSlotModal'){closeSlotModal();return;}
       if(a==='startCollect'){state.recording=!state.recording;state.recordStart=state.recording?Date.now():0;save();renderGroup();say(state.recording?'采集已开始':'采集已停止');}
       if(a==='formatSd')openDialog('format');
