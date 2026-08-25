@@ -174,6 +174,7 @@
       {id:'f4',name:'REC_20260409_1015.ssi',size:'3.2 MB',duration:'22 分 05 秒'},
       {id:'f5',name:'REC_20260408_0845.ssi',size:'5.0 MB',duration:'35 分 12 秒'}
     ];
+    const NONE_SLOT='__none__';
     const initialState={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA'};
     const state={connected:[],slots:{head:null,left:null,right:null},grouped:false,last:'home',detail:'headA',fileSelect:false,selectedFiles:[],recording:false,recordStart:0,pendingSlot:null};
     function resetDemo(){state.connected=[];state.slots={head:null,left:null,right:null};state.grouped=false;state.last='home';state.detail='headA';state.fileSelect=false;state.selectedFiles=[];state.recording=false;state.recordStart=0;state.pendingSlot=null}
@@ -295,7 +296,7 @@
       const isHead=slot==='head';
       sheetTitle.textContent=isHead?'选择头环设备':slot==='left'?'选择左手环设备':'选择右手环设备';
       const choices=online().filter(d=>isHead?d.role==='head':d.role==='ring');
-      const noneSelected=!state.pendingSlot.value;
+      const noneSelected=state.pendingSlot.value===NONE_SLOT||!state.pendingSlot.value;
       sheetBody.innerHTML=(slot!=='head'?`<div class="sheetItem" data-pick="none"><span>不分配</span><b class="warn">${noneSelected?'已选择':'未分配'}</b></div>`:'')+(choices.length?choices.map(d=>`<div class="sheetItem" data-pick="${d.id}" data-pick-slot="${slot}"><span>${d.name}<br><span class="small">${d.sn}</span></span><b class="ok">${state.pendingSlot.value===d.id?'已选择':'可选'}</b></div>`).join(''):'<div class="sheetItem disabled"><span>暂无可用设备</span><b>--</b></div><button class="btn" data-go="add" style="margin:10px 0">去新增设备</button>')+(choices.length?'<div class="row" style="margin-top:14px"><button class="btn" data-action="saveSlot">保存</button><button class="btn plain" data-action="closeSlotModal">返回</button></div>':'<button class="btn plain" style="margin-top:12px" data-action="closeSlotModal">返回</button>');
       sheetBody.dataset.slot=slot;
     }
@@ -382,7 +383,7 @@
     ['pointerup','pointercancel','pointerleave'].forEach(type=>app.addEventListener(type,()=>clearTimeout(filePressTimer)));
     app.addEventListener('click',e=>{
       if(Date.now()<suppressClicksUntil && !e.target.closest('#modal'))return;
-      const pick=e.target.closest('[data-pick]'); if(pick&&!pick.classList.contains('disabled')){state.pendingSlot.value=pick.dataset.pick==='none'?null:pick.dataset.pick;renderSlotSheet();return}
+      const pick=e.target.closest('[data-pick]'); if(pick&&!pick.classList.contains('disabled')){state.pendingSlot.value=pick.dataset.pick==='none'?NONE_SLOT:pick.dataset.pick;renderSlotSheet();return}
       const go=e.target.closest('[data-go]'); if(go){if(go.dataset.go==='sd-files'){state.detailTab='data';state.fileSelect=false;state.selectedFiles=[]}modal.classList.remove('show');resetModal();show(go.dataset.go);return}
       const navBtn=e.target.closest('[data-nav]'); if(navBtn){show(navBtn.dataset.nav);return}
       const connect=e.target.closest('[data-connect]'); if(connect){if(!state.connected.includes(connect.dataset.connect))state.connected.push(connect.dataset.connect);save();render();say('设备连接成功，已保存到设备列表');return}
