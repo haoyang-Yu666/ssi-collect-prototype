@@ -399,7 +399,21 @@
       if(a==='scan')say('蓝牙扫描已刷新');
       if(a==='qr')say('已打开扫码绑定流程');
       if(a==='confirmGroup'){state.grouped=true;save();show('home');say('编组成功');}
-      if(a==='saveSlot'){const slotName=state.pendingSlot.slot;state.slots[slotName]=state.pendingSlot.value;state.slotTouched[slotName]=true;state.grouped=false;save();modal.classList.remove('show');state.pendingSlot=null;render();say('槽位已保存');}
+      if(a==='saveSlot'){
+        e.preventDefault();
+        e.stopPropagation();
+        const slotName=state.pendingSlot.slot;
+        state.slots[slotName]=state.pendingSlot.value;
+        state.slotTouched[slotName]=true;
+        state.grouped=false;
+        suppressClicksUntil=Date.now()+450;
+        save();
+        modal.classList.remove('show');
+        state.pendingSlot=null;
+        render();
+        say('槽位已保存');
+        return;
+      }
       if(a==='closeSlotModal'){closeSlotModal();return;}
       if(a==='startCollect'){state.recording=!state.recording;state.recordStart=state.recording?Date.now():0;save();renderGroup();say(state.recording?'采集已开始':'采集已停止');}
       if(a==='formatSd')openDialog('format');
