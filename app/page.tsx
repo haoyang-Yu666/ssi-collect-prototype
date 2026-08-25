@@ -3,7 +3,7 @@ export default function Home() {
     <main className="prototype-page">
       <iframe
         title="SSI Collect interactive prototype"
-        src="/prototype.html?v=card-arrow-upload-20260825"
+        src="/prototype.html?v=modal-routing-fix-20260825"
         className="prototype-frame"
       />
     </main>

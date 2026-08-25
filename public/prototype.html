@@ -287,6 +287,7 @@
     }
     function openSlot(slot){
       modal.querySelector('.sheet').classList.remove('wifiSheet');
+      modal.dataset.mode='slot';
       state.pendingSlot={slot,value:state.slots[slot]??null};
       renderSlotSheet();
       modal.classList.add('show');
@@ -301,6 +302,8 @@
       sheetBody.dataset.slot=slot;
     }
     function openWifi(name){
+      state.pendingSlot=null;
+      modal.dataset.mode='dialog';
       modal.querySelector('.sheet').classList.add('wifiSheet');
       sheetTitle.textContent='连接 Wi‑Fi';
       sheetBody.innerHTML=`<div class="row"><div><div class="h2">${name}</div><div class="hint">5GHz · 信号强 · RSSI -42 dBm</div></div><span class="pill blue">已选择</span></div><div class="label">Wi‑Fi 密码</div><div class="row"><input class="input" type="password" placeholder="请输入密码" style="flex:1"><button class="rightText" style="position:static;padding:0">隐藏</button></div><label class="row" style="justify-content:flex-start;margin:14px 0 8px"><input type="checkbox"><span class="muted">下发后由设备保存该网络配置</span></label><div class="hint">密码仅用于配置设备，不在日志中明文展示。</div><div class="row" style="margin-top:16px"><button class="btn plain" data-action="closeModal">取消</button><button class="btn" data-action="connectWifi">开始连接</button></div>`;
@@ -308,10 +311,13 @@
     }
     function resetModal(){
       modal.classList.remove('dialogMode');
+      modal.dataset.mode='';
       modal.querySelector('.sheet').classList.remove('wifiSheet','dialogSheet');
     }
     function openDialog(kind){
       resetModal();
+      state.pendingSlot=null;
+      modal.dataset.mode='dialog';
       modal.classList.add('dialogMode');
       modal.querySelector('.sheet').classList.add('dialogSheet');
       const dialogs={
@@ -383,7 +389,52 @@
     ['pointerup','pointercancel','pointerleave'].forEach(type=>app.addEventListener(type,()=>clearTimeout(filePressTimer)));
     app.addEventListener('click',e=>{
       if(Date.now()<suppressClicksUntil && !e.target.closest('#modal'))return;
-      const pick=e.target.closest('[data-pick]'); if(pick&&!pick.classList.contains('disabled')){state.pendingSlot.value=pick.dataset.pick==='none'?NONE_SLOT:pick.dataset.pick;renderSlotSheet();return}
+      const act=e.target.closest('[data-action]');
+      if(act){
+        const a=act.dataset.action;
+        if(a==='login'){resetDemo();show('home');say('登录成功');return}
+        if(a==='scan'){say('蓝牙扫描已刷新');return}
+        if(a==='qr'){say('已打开扫码绑定流程');return}
+        if(a==='confirmGroup'){state.grouped=true;save();show('home');say('编组成功');return}
+        if(a==='saveSlot'){
+          e.preventDefault();
+          e.stopPropagation();
+          if(modal.dataset.mode!=='slot'||!state.pendingSlot)return;
+          const slotName=state.pendingSlot.slot;
+          state.slots[slotName]=state.pendingSlot.value;
+          state.slotTouched[slotName]=true;
+          state.grouped=false;
+          suppressClicksUntil=Date.now()+450;
+          save();
+          modal.classList.remove('show');
+          state.pendingSlot=null;
+          resetModal();
+          render();
+          say('槽位已保存');
+          return;
+        }
+        if(a==='closeSlotModal'){closeSlotModal();return}
+        if(a==='startCollect'){state.recording=!state.recording;state.recordStart=state.recording?Date.now():0;save();renderGroup();say(state.recording?'采集已开始':'采集已停止');return}
+        if(a==='formatSd'){openDialog('format');return}
+        if(a==='hairCheck'){openDialog('hair');return}
+        if(a==='diagnosticUpload'){openDialog('diagnostic');return}
+        if(a==='diagnosticDone'){openDialog('diagnosticDone');return}
+        if(a==='confirmHair'){e.preventDefault();e.stopPropagation();suppressClicksUntil=Date.now()+450;modal.classList.remove('show');resetModal();say('已确认无遮挡');return}
+        if(a==='confirmFormat'){modal.classList.remove('show');resetModal();say('SD 卡格式化已确认');return}
+        if(a==='selectAllFiles'){state.fileSelect=true;state.selectedFiles=state.selectedFiles.length===files.length?[]:files.map(f=>f.id);if(!state.selectedFiles.length)state.fileSelect=false;renderSdFiles();return}
+        if(a==='batchUpload'){say(state.selectedFiles.length?'已开始批量上传所选文件':'请先选择文件');return}
+        if(a==='deleteFiles'){say(state.selectedFiles.length?'已删除所选文件':'请先选择文件');return}
+        if(a==='ota'){openDialog('ota');return}
+        if(a==='startOta'){openDialog('otaProgress');return}
+        if(a==='upload'){say('数据上传已开始');return}
+        if(a==='reboot'){say('设备重启指令已发送');return}
+        if(a==='unbind'){say('此处可接入解绑确认弹窗');return}
+        if(a==='connectWifi'){modal.classList.remove('show');state.pendingSlot=null;resetModal();say('Wi‑Fi 连接成功');return}
+        if(a==='closeModal'){modal.classList.remove('show');state.pendingSlot=null;resetModal();return}
+        if(a==='logout'){show('login');say('已退出登录');return}
+      }
+      const pick=e.target.closest('[data-pick]');
+      if(pick&&!pick.classList.contains('disabled')&&modal.dataset.mode==='slot'&&state.pendingSlot){state.pendingSlot.value=pick.dataset.pick==='none'?NONE_SLOT:pick.dataset.pick;renderSlotSheet();return}
       const go=e.target.closest('[data-go]'); if(go){if(go.dataset.go==='sd-files'){state.detailTab='data';state.fileSelect=false;state.selectedFiles=[]}modal.classList.remove('show');resetModal();show(go.dataset.go);return}
       const navBtn=e.target.closest('[data-nav]'); if(navBtn){show(navBtn.dataset.nav);return}
       const connect=e.target.closest('[data-connect]'); if(connect){if(!state.connected.includes(connect.dataset.connect))state.connected.push(connect.dataset.connect);save();render();say('设备连接成功，已保存到设备列表');return}
@@ -393,46 +444,6 @@
       const tab=e.target.closest('[data-tab]'); if(tab){state.detailTab=tab.dataset.tab;setDetailTab(tab.dataset.tab);return}
       const sw=e.target.closest('.switch'); if(sw){sw.classList.toggle('on');return}
       const file=e.target.closest('[data-file]'); if(file){if(fileLongPress){fileLongPress=false;return}if(state.fileSelect){const id=file.dataset.file;state.selectedFiles=state.selectedFiles.includes(id)?state.selectedFiles.filter(x=>x!==id):[...state.selectedFiles,id];if(!state.selectedFiles.length)state.fileSelect=false;renderSdFiles();}else say('长按文件可进入选择模式');return}
-      const act=e.target.closest('[data-action]'); if(!act)return;
-      const a=act.dataset.action;
-      if(a==='login'){resetDemo();show('home');say('登录成功');}
-      if(a==='scan')say('蓝牙扫描已刷新');
-      if(a==='qr')say('已打开扫码绑定流程');
-      if(a==='confirmGroup'){state.grouped=true;save();show('home');say('编组成功');}
-      if(a==='saveSlot'){
-        e.preventDefault();
-        e.stopPropagation();
-        const slotName=state.pendingSlot.slot;
-        state.slots[slotName]=state.pendingSlot.value;
-        state.slotTouched[slotName]=true;
-        state.grouped=false;
-        suppressClicksUntil=Date.now()+450;
-        save();
-        modal.classList.remove('show');
-        state.pendingSlot=null;
-        render();
-        say('槽位已保存');
-        return;
-      }
-      if(a==='closeSlotModal'){closeSlotModal();return;}
-      if(a==='startCollect'){state.recording=!state.recording;state.recordStart=state.recording?Date.now():0;save();renderGroup();say(state.recording?'采集已开始':'采集已停止');}
-      if(a==='formatSd')openDialog('format');
-      if(a==='hairCheck')openDialog('hair');
-      if(a==='diagnosticUpload')openDialog('diagnostic');
-      if(a==='diagnosticDone')openDialog('diagnosticDone');
-      if(a==='confirmHair'){e.preventDefault();e.stopPropagation();suppressClicksUntil=Date.now()+450;modal.classList.remove('show');resetModal();say('已确认无遮挡');return;}
-      if(a==='confirmFormat'){modal.classList.remove('show');resetModal();say('SD 卡格式化已确认');}
-      if(a==='selectAllFiles'){state.fileSelect=true;state.selectedFiles=state.selectedFiles.length===files.length?[]:files.map(f=>f.id);if(!state.selectedFiles.length)state.fileSelect=false;renderSdFiles();}
-      if(a==='batchUpload')say(state.selectedFiles.length?'已开始批量上传所选文件':'请先选择文件');
-      if(a==='deleteFiles')say(state.selectedFiles.length?'已删除所选文件':'请先选择文件');
-      if(a==='ota')openDialog('ota');
-      if(a==='startOta')openDialog('otaProgress');
-      if(a==='upload')say('数据上传已开始');
-      if(a==='reboot')say('设备重启指令已发送');
-      if(a==='unbind')say('此处可接入解绑确认弹窗');
-      if(a==='connectWifi'){modal.classList.remove('show');resetModal();say('Wi‑Fi 连接成功');}
-      if(a==='closeModal'){modal.classList.remove('show');state.pendingSlot=null;resetModal();}
-      if(a==='logout'){show('login');say('已退出登录');}
     });
     modal.addEventListener('click',e=>{
       const back=e.target.closest('[data-action="closeSlotModal"]');
