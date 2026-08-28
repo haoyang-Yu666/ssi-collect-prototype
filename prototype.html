@@ -41,6 +41,9 @@
     .tabs{display:flex;background:#edf3ff;border-radius:10px;padding:3px;margin-bottom:12px}.tabs button{flex:1;height:34px;border:0;border-radius:8px;background:transparent;color:#667085;font-weight:900;cursor:pointer}.tabs button.active{background:#fff;color:var(--blue)}
     .heroDevice{height:156px;border-radius:15px;background:var(--navy);color:#fff;display:grid;place-items:center;text-align:center;margin-bottom:13px}.line{padding:12px 0;border-bottom:1px solid var(--line)}.line:last-child{border-bottom:0}
     .clickLine{cursor:pointer}.switch{width:42px;height:24px;border-radius:999px;background:#d8deea;position:relative}.switch:before{content:"";width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:.18s}.switch.on{background:#23c56f}.switch.on:before{left:20px}
+    .langToggle{display:inline-flex;align-items:center;gap:2px;background:#eef3fb;border-radius:999px;padding:4px;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(207,224,255,.55)}
+    .langOption{min-width:54px;height:34px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#697386;line-height:1}
+    .langOption.active{background:#fff;color:var(--blue);box-shadow:0 4px 12px rgba(15,23,42,.08)}
     .videoGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.video{height:96px;border-radius:8px 8px 0 0;background:#1e243e;display:grid;place-items:center;color:#8ea4cf}.video:before{content:"▶";width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.45);display:grid;place-items:center;color:#b4c2df}.caption{font-size:11px;margin:0 0 10px;padding:8px;background:#f8fafd;border:1px solid var(--line);border-top:0;border-radius:0 0 8px 8px}.progress{height:8px;background:#e7edf7;border-radius:999px;overflow:hidden}.bar{height:100%;width:49%;background:var(--blue)}
     .quickStats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quickStat{border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;align-items:center;gap:10px}.statIcon{width:36px;height:36px;border-radius:8px;background:#eef3ff;color:var(--blue);display:grid;place-items:center;font-weight:900}.noticeLine{font-size:12px;color:var(--muted);margin:12px 2px}
     .modalMask{position:absolute;inset:0;background:rgba(5,14,32,.38);z-index:20;display:none;align-items:center;justify-content:center;padding:0 18px}.modalMask.show{display:flex}.modalMask.dialogMode{align-items:center;justify-content:center;padding:0 18px}.sheet{background:#fff;border-radius:18px;width:100%;max-width:360px;padding:22px 22px;box-shadow:0 24px 80px rgba(0,0,0,.25)}.sheet.wifiSheet{border-radius:18px;padding:22px 22px}.sheet.dialogSheet{position:relative;border-radius:18px;margin:0;padding:24px 22px 22px;box-shadow:0 24px 80px rgba(0,0,0,.25)}.sheetTitle{text-align:center;font-weight:900;margin-bottom:12px;font-size:18px}.sheetItem{height:54px;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;margin-bottom:9px;cursor:pointer}.sheetItem.disabled{opacity:.45;cursor:not-allowed}.dialogIcon{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;margin:2px auto 16px;font-size:28px}.dialogIcon.red{background:#fff0f0;color:var(--red)}.dialogIcon.blue{background:#eef3ff;color:var(--blue)}.dialogIcon.green{background:#eaf9f0;color:var(--green)}.fileRow{display:flex;align-items:center;gap:12px;background:#fff;border-radius:12px;padding:12px;margin-bottom:10px;user-select:none;cursor:pointer}.fileRow .checkBox{display:none}.fileRow.selecting .checkBox{display:grid;flex:0 0 20px}.checkBox{width:20px;height:20px;border:2px solid #9aa4b6;border-radius:6px;display:grid;place-items:center;color:#fff;font-size:12px}.checkBox.on{border-color:var(--blue);background:var(--blue)}.fileIcon{width:40px;height:40px;border-radius:10px;background:#eef3ff;color:var(--blue);display:grid;place-items:center;font-weight:900}.fileBar{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:14px 18px 18px;display:flex;align-items:center;gap:12px;z-index:6}.previewThumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.previewCard{overflow:hidden;border:1px solid var(--line);border-radius:10px;background:#f8fafd}.previewCard .video{height:96px;border-radius:0}.previewLabel{padding:8px;font-size:12px;font-weight:800}.previewLabel .ok{display:block;margin-top:2px}.toast{position:absolute;left:22px;right:22px;bottom:84px;background:#111c36;color:#fff;border-radius:12px;padding:12px;text-align:center;font-size:13px;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s;z-index:30}.toast.show{opacity:1;transform:translateY(0)}
@@ -143,7 +146,7 @@
         <div class="top"><div class="title">我的</div></div>
         <div class="card row"><div class="deviceIcon">内</div><div class="grow"><div class="name">内部测试账号1</div><div class="id">采集工程组 · SSI-TSP-102</div></div></div>
         <div class="section">应用信息</div>
-        <div class="card"><div class="line row"><span>应用名称</span><b>SSI Collect</b></div><div class="line row"><span>版本号</span><b>V1.0.0</b></div><div class="line row"><span>语言切换</span><b>中文 / EN</b></div></div>
+        <div class="card"><div class="line row"><span>应用名称</span><b>SSI Collect</b></div><div class="line row"><span>版本号</span><b>V1.0.0</b></div><div class="line row"><span>语言切换</span><div class="langToggle" role="group" aria-label="语言切换"><span class="langOption active" data-lang="zh">中文</span><span class="langOption" data-lang="en">EN</span></div></div></div>
         <div class="alert" style="background:#fff0f0;border-color:#ffd0cc;color:#d92d20">退出登录会返回登录页，已连接设备仍会保留在本机。</div>
         <button class="btn danger" data-action="logout">退出登录</button>
       </section>
@@ -176,8 +179,8 @@
     ];
     const NONE_SLOT='__none__';
     const initialState={connected:[],slots:{head:null,left:null,right:null},slotTouched:{head:false,left:false,right:false},grouped:false,last:'home',detail:'headA'};
-    const state={connected:[],slots:{head:null,left:null,right:null},slotTouched:{head:false,left:false,right:false},grouped:false,last:'home',detail:'headA',fileSelect:false,selectedFiles:[],recording:false,recordStart:0,pendingSlot:null};
-    function resetDemo(){state.connected=[];state.slots={head:null,left:null,right:null};state.slotTouched={head:false,left:false,right:false};state.grouped=false;state.last='home';state.detail='headA';state.fileSelect=false;state.selectedFiles=[];state.recording=false;state.recordStart=0;state.pendingSlot=null}
+    const state={connected:[],slots:{head:null,left:null,right:null},slotTouched:{head:false,left:false,right:false},grouped:false,hasBoundGroup:false,last:'home',detail:'headA',fileSelect:false,selectedFiles:[],recording:false,recordStart:0,pendingSlot:null,lang:'zh'};
+    function resetDemo(){state.connected=[];state.slots={head:null,left:null,right:null};state.slotTouched={head:false,left:false,right:false};state.grouped=false;state.hasBoundGroup=false;state.last='home';state.detail='headA';state.fileSelect=false;state.selectedFiles=[];state.recording=false;state.recordStart=0;state.pendingSlot=null;state.lang='zh'}
     function save(){}
     function say(t){toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1500)}
     function formatDuration(ms){
@@ -188,6 +191,13 @@
       return `${h}:${m}:${s}`;
     }
     function recordingLabel(){return state.recording&&state.recordStart?`采集中 ${formatDuration(Date.now()-state.recordStart)}`:'未采集'}
+    function finishGroup(){
+      state.grouped=true;
+      state.hasBoundGroup=true;
+      save();
+      show('home');
+      say('编组成功');
+    }
     function online(){return catalog.filter(d=>state.connected.includes(d.id))}
     function device(id){return catalog.find(d=>d.id===id)}
     function iconFor(d){return d.role==='head'?'头':'环'}
@@ -214,6 +224,10 @@
     }
     function render(){
       renderHome(); renderScan(); renderPair(); renderGroup(); renderDetail(); renderSdFiles();
+      renderLanguageToggle();
+    }
+    function renderLanguageToggle(){
+      document.querySelectorAll('[data-lang]').forEach(el=>el.classList.toggle('active',el.dataset.lang===state.lang));
     }
     function renderHome(){
       const homeDevices=document.getElementById('homeDevices');
@@ -353,6 +367,12 @@
           body:'正在写入新固件，请保持头环连接并不要退出当前页面。',
           icon:'<div class="dialogIcon blue">↻</div>',
           content:'<div class="line row" style="border:0;margin-top:12px"><span><b>升级进度</b></span><b style="color:var(--blue)">45%</b></div><div class="progress"><div class="bar" style="width:45%"></div></div><div style="margin-top:14px;background:#f4f7fd;border-radius:10px;padding:12px;color:#6c778c;font-size:13px;text-align:center">预计还需 2 分钟，完成后设备将自动重启。</div><button class="btn" style="margin-top:18px" data-action="closeModal">升级中</button>'
+        },
+        groupReplace:{
+          title:'编组提示',
+          body:'当前已有绑定的设备组，是否立即解除绑定旧的编组并重新编组？',
+          icon:'<div class="dialogIcon red">⚠</div>',
+          content:'<div class="row" style="margin-top:18px"><button class="btn" data-action="confirmReplaceGroup">确定</button><button class="btn plain" data-action="closeModal">返回</button></div>'
         }
       };
       const d=dialogs[kind];
@@ -361,6 +381,8 @@
         ? ''
         : kind==='ota'||kind==='otaProgress'
         ? `<div class="hint" style="font-size:14px;text-align:center">${d.body}</div>`
+        : kind==='groupReplace'
+        ? `<div class="hint" style="font-size:18px;text-align:center;line-height:1.45">${d.body}</div>`
         : `<div class="hint" style="font-size:14px;text-align:${kind==='hair'?'left':'center'}">${d.body}</div>`;
       sheetBody.innerHTML=(d.icon||'')+bodyHtml+d.content;
       modal.classList.add('show');
@@ -395,7 +417,8 @@
         if(a==='login'){resetDemo();show('home');say('登录成功');return}
         if(a==='scan'){say('蓝牙扫描已刷新');return}
         if(a==='qr'){say('已打开扫码绑定流程');return}
-        if(a==='confirmGroup'){state.grouped=true;save();show('home');say('编组成功');return}
+        if(a==='confirmGroup'){if(state.hasBoundGroup){openDialog('groupReplace');return}finishGroup();return}
+        if(a==='confirmReplaceGroup'){modal.classList.remove('show');resetModal();finishGroup();return}
         if(a==='saveSlot'){
           e.preventDefault();
           e.stopPropagation();
@@ -442,6 +465,7 @@
       const slot=e.target.closest('[data-slot]'); if(slot){openSlot(slot.dataset.slot);return}
       const wifi=e.target.closest('[data-wifi]'); if(wifi){openWifi(wifi.dataset.wifi);return}
       const tab=e.target.closest('[data-tab]'); if(tab){state.detailTab=tab.dataset.tab;setDetailTab(tab.dataset.tab);return}
+      const lang=e.target.closest('[data-lang]'); if(lang){state.lang=lang.dataset.lang;save();renderLanguageToggle();say(state.lang==='zh'?'已切换为中文':'Switched to English');return}
       const sw=e.target.closest('.switch'); if(sw){sw.classList.toggle('on');return}
       const file=e.target.closest('[data-file]'); if(file){if(fileLongPress){fileLongPress=false;return}if(state.fileSelect){const id=file.dataset.file;state.selectedFiles=state.selectedFiles.includes(id)?state.selectedFiles.filter(x=>x!==id):[...state.selectedFiles,id];if(!state.selectedFiles.length)state.fileSelect=false;renderSdFiles();}else say('长按文件可进入选择模式');return}
     });
