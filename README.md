@@ -61,14 +61,16 @@ npm test
 
 ## Deployment
 
-This project is configured to deploy the static prototype on GitHub Pages.
+This project can be published to GitHub Pages through the `gh-pages` branch.
 
-On every push to `main`, GitHub Actions publishes the `public/` folder. The root page `public/index.html` redirects to `public/prototype.html`.
+The `gh-pages` branch contains the static files from `public/`. The root page `index.html` redirects to `prototype.html`.
 
 If Pages is not enabled yet, open the repository settings and set:
 
 - `Settings` -> `Pages`
-- Source: `GitHub Actions`
+- Source: `Deploy from a branch`
+- Branch: `gh-pages`
+- Folder: `/ (root)`
 
 The page will be available at:
 
