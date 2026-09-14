@@ -25,7 +25,13 @@ The prototype focuses on the product flow for connecting devices, assigning head
 - Vite
 - TypeScript
 
-The main prototype UI is implemented in `public/prototype.html` and rendered through `app/page.tsx`.
+The main prototype UI is implemented in `public/prototype.html`.
+
+## Online Demo
+
+GitHub Pages:
+
+https://haoyang-yu666.github.io/ssi-collect-prototype/
 
 ## Getting Started
 
@@ -55,14 +61,29 @@ npm test
 
 ## Deployment
 
-This project can be deployed as a standard Vinext / Vite web app.
+This project is configured to deploy the static prototype on GitHub Pages.
+
+On every push to `main`, GitHub Actions publishes the `public/` folder. The root page `public/index.html` redirects to `public/prototype.html`.
+
+If Pages is not enabled yet, open the repository settings and set:
+
+- `Settings` -> `Pages`
+- Source: `GitHub Actions`
+
+The page will be available at:
+
+```text
+https://haoyang-yu666.github.io/ssi-collect-prototype/
+```
+
+This project can also be deployed as a standard Vinext / Vite web app.
 
 Suggested options:
 
 - Cloudflare Pages / Workers
 - Vercel
 - Netlify
-- GitHub Pages after exporting or adapting the build output
+- GitHub Pages
 
 The repository also contains `.openai/hosting.json`, which records the original ChatGPT Sites deployment metadata. It does not contain secrets.
 
